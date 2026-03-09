@@ -50,9 +50,14 @@
 
         /* NAVBAR VISIBILITY FIX */
         .navbar {
-            background-color: rgba(0,0,0,0.95) !important;
-            border-bottom: 1px solid #222;
+            background-color: rgba(0,0,0,0.85) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid #333;
             padding: 15px 0;
+            z-index: 9999 !important;
+            transform: translateZ(0);
+            -webkit-transform: translate3d(0,0,0); /* Mobile Safari fixed-top rendering bug fix */
         }
         
         .navbar-brand {
