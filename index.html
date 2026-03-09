@@ -229,6 +229,37 @@
             .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
             .right { left: 0; }
             .left::after, .right::after { left: 21px; }
+            
+            /* Responsive Typography & Hero fixes */
+            .display-1 {
+                font-size: 3rem !important; /* Scale down giant hero text */
+            }
+            .hero-section {
+                padding-top: 100px; /* Space from the navbar on small mobiles */
+            }
+            
+            /* About Section Image Center */
+            .profile-img-wrapper {
+                max-width: 280px;
+                margin: 0 auto;
+                display: flex;
+            }
+            #about .col-lg-5 {
+                text-align: center;
+            }
+            
+            /* General padding adjustments for mobile */
+            section {
+                padding-top: 60px !important;
+                padding-bottom: 60px !important;
+            }
+        }
+        
+        /* Card Image Aspect Ratio Fix */
+        .card-img-top {
+            object-fit: cover;
+            aspect-ratio: 16 / 9;
+            width: 100%;
         }
 
         /* Mobile Navbar Fixes */
@@ -354,7 +385,6 @@
                         <div class="progress"><div class="progress-bar" style="width: 85%"></div></div>
                     </div>
                 </div>
-                 <div class="row justify-content-center">
                 <div class="col-md-6 mb-4" data-aos="fade-up">
                     <div class="skill-card p-4 rounded-3">
                         <div class="d-flex justify-content-between mb-2">
