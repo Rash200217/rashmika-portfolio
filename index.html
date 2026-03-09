@@ -225,6 +225,33 @@
             .left::after, .right::after { left: 21px; }
         }
 
+        /* Mobile Navbar Fixes */
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                background-color: #111;
+                padding: 1.5rem;
+                border-radius: 10px;
+                margin-top: 15px;
+                border: 1px solid #333;
+                text-align: center;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            }
+            .nav-link {
+                margin: 8px 0 !important;
+                padding: 10px !important;
+                border-radius: 8px;
+            }
+            .nav-link:hover {
+                background-color: rgba(0, 230, 118, 0.1);
+            }
+            .navbar-nav .nav-item .btn {
+                margin: 15px auto 5px auto !important;
+                width: 100%;
+                max-width: 300px;
+                display: block;
+            }
+        }
+
         /* Utilities */
         .text-primary { color: var(--primary) !important; }
         .border-primary { border-color: var(--primary) !important; }
@@ -532,7 +559,7 @@
                 // Close mobile menu if open
                 const navbarCollapse = document.getElementById('navbarNav');
                 if (navbarCollapse.classList.contains('show')) {
-                    const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+                    const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse, { toggle: false });
                     bsCollapse.hide();
                 }
             });

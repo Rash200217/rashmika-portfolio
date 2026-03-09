@@ -21,9 +21,7 @@
             --text-silver: #c0c0c0;   /* Light Silver for readability */
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+
         
         body {
             font-family: 'Poppins', sans-serif;
@@ -225,6 +223,33 @@
             .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
             .right { left: 0; }
             .left::after, .right::after { left: 21px; }
+        }
+
+        /* Mobile Navbar Fixes */
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                background-color: #111;
+                padding: 1.5rem;
+                border-radius: 10px;
+                margin-top: 15px;
+                border: 1px solid #333;
+                text-align: center;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            }
+            .nav-link {
+                margin: 8px 0 !important;
+                padding: 10px !important;
+                border-radius: 8px;
+            }
+            .nav-link:hover {
+                background-color: rgba(0, 230, 118, 0.1);
+            }
+            .navbar-nav .nav-item .btn {
+                margin: 15px auto 5px auto !important;
+                width: 100%;
+                max-width: 300px;
+                display: block;
+            }
         }
 
         /* Utilities */
@@ -486,18 +511,95 @@
             }, 1500);
         });
 
-        // Add active class to navbar link on click
+        // Add active class to navbar link on click and custom fast smooth scroll
         const navLinks = document.querySelectorAll('.nav-link');
+        const navbarHeight = 80; // Approximate height of the fixed navbar
+
         navLinks.forEach(link => {
-            link.addEventListener('click', function() {
+            link.addEventListener('click', function(e) {
+                // Handle custom fast smooth scroll for anchor links
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#') && targetId !== '#') {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                        const startPosition = window.pageYOffset;
+                        const distance = targetPosition - startPosition;
+                        const duration = 500; // Fast duration in milliseconds (500ms)
+                        let start = null;
+
+                        // Easing function: easeInOutQuad
+                        const easeInOutQuad = (t, b, c, d) => {
+                            t /= d/2;
+                            if (t < 1) return c/2*t*t + b;
+                            t--;
+                            return -c/2 * (t*(t-2) - 1) + b;
+                        };
+
+                        const animation = (currentTime) => {
+                            if (start === null) start = currentTime;
+                            const timeElapsed = currentTime - start;
+                            const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+                            window.scrollTo(0, run);
+                            if (timeElapsed < duration) {
+                                requestAnimationFrame(animation);
+                            }
+                        };
+
+                        requestAnimationFrame(animation);
+                        
+                        // Update URL hash without jumping
+                        history.pushState(null, null, targetId);
+                    }
+                }
+
                 navLinks.forEach(nav => nav.classList.remove('active'));
                 this.classList.add('active');
                 
                 // Close mobile menu if open
                 const navbarCollapse = document.getElementById('navbarNav');
                 if (navbarCollapse.classList.contains('show')) {
-                    const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+                    const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse, { toggle: false });
                     bsCollapse.hide();
+                }
+            });
+        });
+        
+        // Handle "View Work" and "Hire Me" buttons fast scroll
+        document.querySelectorAll('a[href^="#"]:not(.nav-link)').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#') && targetId !== '#') {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                        const startPosition = window.pageYOffset;
+                        const distance = targetPosition - startPosition;
+                        const duration = 500; 
+                        let start = null;
+
+                        const easeInOutQuad = (t, b, c, d) => {
+                            t /= d/2;
+                            if (t < 1) return c/2*t*t + b;
+                            t--;
+                            return -c/2 * (t*(t-2) - 1) + b;
+                        };
+
+                        const animation = (currentTime) => {
+                            if (start === null) start = currentTime;
+                            const timeElapsed = currentTime - start;
+                            const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+                            window.scrollTo(0, run);
+                            if (timeElapsed < duration) {
+                                requestAnimationFrame(animation);
+                            }
+                        };
+
+                        requestAnimationFrame(animation);
+                        history.pushState(null, null, targetId);
+                    }
                 }
             });
         });
