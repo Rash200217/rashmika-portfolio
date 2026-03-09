@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rashmika Dhananjaya-Portfolio</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/rashmika-portfolio/favicon.png" />
+
+
+    <style>
+        /* --- HIGH CONTRAST DARK THEME --- */
+        :root {
+            --primary: #00e676;       /* Neon Green */
+            --dark-bg: #000000;       /* Pitch Black */
+            --card-bg: #111111;       /* Dark Grey for cards */
+            --text-white: #ffffff;
+            --text-silver: #c0c0c0;   /* Light Silver for readability */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-silver); /* Default text color */
+            overflow-x: hidden;
+        }
+
+        /* --- VISIBILITY FIXES (The Important Part) --- */
+        
+        /* Force all headings to be White */
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+            color: var(--text-white) !important;
+        }
+
+        /* Force specific Bootstrap classes to behave */
+        .text-muted {
+            color: #888888 !important;
+        }
+        
+        /* Ensure links in text are visible */
+        a {
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        /* NAVBAR VISIBILITY FIX */
+        .navbar {
+            background-color: rgba(0,0,0,0.95) !important;
+            border-bottom: 1px solid #222;
+            padding: 15px 0;
+        }
+        
+        .navbar-brand {
+            color: #fff !important;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav-link {
+            color: #e0e0e0 !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary) !important;
+        }
+
+        /* --- FIXED MOBILE MENU ICON --- */
+        .navbar-toggler {
+            border-color: rgba(255,255,255,0.5) !important; /* Visible Border */
+        }
+        
+        .navbar-toggler-icon {
+            /* This forces the SVG icon to be WHITE so it shows on black background */
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+            filter: none !important; /* Reset any filters */
+        }
+
+        /* Hero Text */
+        .hero-section {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 70px;
+        }
+        .typed-text { color: var(--primary); }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary);
+            border: 2px solid var(--primary);
+            color: #000 !important; /* Black text on green button */
+            font-weight: 700;
+            padding: 10px 30px;
+            border-radius: 50px;
+        }
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary) !important;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .btn-outline-light {
+            border: 2px solid rgba(255,255,255,0.3);
+            color: #fff !important;
+            border-radius: 50px;
+            padding: 10px 30px;
+        }
+        .btn-outline-light:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: #000 !important;
+        }
+
+        .btn-outline-light:hover i,
+        .btn-outline-light:hover .fab,
+        .btn-outline-light:hover .fas {
+            color: #000 !important;
+        }
+
+        /* Card & Content Visibility */
+        .card, .skill-card, .timeline-content {
+            background-color: var(--card-bg);
+            border: 1px solid #333;
+        }
+        /* Force text inside cards to be silver */
+        .card-body, .card-text, .timeline-content p {
+            color: var(--text-silver);
+        }
+
+        /* Profile Image Border Effect */
+        .profile-img-wrapper {
+            padding: 10px;
+            border-radius: 50%;
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 350px;
+            min-width: 250px; /* Safe minimum on mobile */
+            aspect-ratio: 1 / 1;
+        }
+
+        .profile-img-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(45deg, var(--primary), #00ffcc, var(--primary));
+            background-size: 200% 200%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: gradient-border 3s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradient-border {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .profile-image {
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.4);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Forms (Critical for visibility) */
+        .form-control {
+            background-color: #222 !important; /* Lighter grey input background */
+            border: 1px solid #444;
+            color: #fff !important; /* White text when typing */
+            padding: 15px;
+        }
+        .form-control:focus {
+            background-color: #222 !important;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 230, 118, 0.2);
+            color: #fff !important;
+        }
+        .form-control::placeholder {
+            color: #888; /* Visible placeholder text */
+            opacity: 1;
+        }
+
+        /* Skills Progress Bar */
+        .progress { height: 8px; background-color: #333; }
+        .progress-bar { background-color: var(--primary); box-shadow: 0 0 10px var(--primary); }
+
+        /* Icons */
+        i, .fas, .fab { color: var(--primary); }
+
+        /* Timeline */
+        .timeline { position: relative; max-width: 1200px; margin: 0 auto; }
+        .timeline::after { content: ''; position: absolute; width: 2px; background-color: #333; top: 0; bottom: 0; left: 50%; margin-left: -1px; }
+        .timeline-item { padding: 10px 40px; position: relative; width: 50%; }
+        .left { left: 0; } .right { left: 50%; }
+        .timeline-item::after { content: ''; position: absolute; width: 20px; height: 20px; background-color: #000; border: 4px solid var(--primary); border-radius: 50%; top: 15px; z-index: 1; }
+        .left::after { right: -10px; } .right::after { left: -10px; }
+
+        @media (max-width: 768px) {
+            .timeline::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .right { left: 0; }
+            .left::after, .right::after { left: 21px; }
+        }
+
+        /* Utilities */
+        .text-primary { color: var(--primary) !important; }
+        .border-primary { border-color: var(--primary) !important; }
+    </style>
+  <script type="module" crossorigin src="/rashmika-portfolio/assets/index-BHRGt9_H.js"></script>
+</head>
+<body>
+
+    <nav id="navbar-example" class="navbar navbar-expand-lg fixed-top navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Rash<span class="text-primary">.DEV</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-primary text-black ms-lg-3 px-4" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-section text-center">
+        <div class="container" data-aos="zoom-in">
+            <h4 class="text-primary text-uppercase mb-3">Welcome</h4>
+            <h1 class="display-1 fw-bold mb-4">I'm Rashmika Dhananjaya</h1>
+            <p class="lead fs-3 mb-5 text-white">I am a <span class="typed-text fw-bold"></span></p>
+            <a href="#projects" class="btn btn-primary me-2">View Work</a>
+            <a href="#contact" class="btn btn-outline-light">Hire Me</a>
+        </div>
+    </section>
+
+    <section id="about" class="py-5" style="scroll-margin-top: 80px;">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-4" data-aos="fade-right">
+                    <div class="profile-img-wrapper position-relative d-inline-block">
+                        <img src="/rashmika-portfolio/assets/profile-Da0Bb7-f.png" class="img-fluid profile-image" alt="Profile">
+                    </div>
+                </div>
+                <div class="col-lg-7 ps-lg-5" data-aos="fade-left">
+                    <h6 class="text-primary text-uppercase fw-bold">About Me</h6>
+                    <h2 class="display-5 fw-bold mb-4">Building Full-Stack Development <span class="text-primary">Experiences</span></h2>
+                    <p class="lead">I am Currently Pursuing BSc.(Hons) in Software Engineering at Saegis Campus. Passionate about Full Stack Development and solving complex problems.</p>
+                    
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-6 mb-3 mb-md-0">
+                            <p class="mb-2"><i class="fas fa-user me-2"></i> Rashmika Dhananjaya</p>
+                            <p class="mb-0"><i class="fas fa-envelope me-2"></i> rashmikadhananjaya@gmail.com</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> 130, Horana Road, Wethara, Polgasowita</p>
+                            <p class="mb-0"><i class="fas fa-calendar me-2"></i> September 17, 2002</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="assets/images/RashmikaDhananjaya-cv.pdf" download class="btn btn-primary px-4 py-3 rounded-pill fw-bold">
+                            Download CV <i class="fas fa-download ms-2 text-black"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-5" style="background-color: #050505; scroll-margin-top: 80px;">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h6 class="text-primary text-uppercase fw-bold">Skills</h6>
+                <h2 class="fw-bold">My Expertise</h2>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6 mb-4" data-aos="fade-up">
+                    <div class="skill-card p-4 rounded-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-bold text-white">Frontend (React, Bootstrap, Tailwind CSS, SASS/SCSS)</span>
+                            <span class="text-primary">90%</span>
+                        </div>
+                        <div class="progress"><div class="progress-bar" style="width: 90%"></div></div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="skill-card p-4 rounded-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-bold text-white">Backend (Spring Boot, Laravel, ASP.NET Core, Express.js)</span>
+                            <span class="text-primary">85%</span>
+                        </div>
+                        <div class="progress"><div class="progress-bar" style="width: 85%"></div></div>
+                    </div>
+                </div>
+                 <div class="row justify-content-center">
+                <div class="col-md-6 mb-4" data-aos="fade-up">
+                    <div class="skill-card p-4 rounded-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-bold text-white">Tools (AWS, Docker, Git)</span>
+                            <span class="text-primary">80%</span>
+                        </div>
+                        <div class="progress"><div class="progress-bar" style="width: 80%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="py-5" style="scroll-margin-top: 80px;">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Education</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item left" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <span class="badge bg-primary text-black mb-2">2023- Present</span>
+                        <h5>BSc (Hons) in Software Engineering</h5>
+                        <p class="text-primary mb-0">Saegis Campus - Nugegoda</p>
+                    </div>
+                </div>
+                <div class="timeline-item right" data-aos="fade-left">
+                    <div class="timeline-content">
+                        <span class="badge bg-primary text-black mb-2">2019 - 2021</span>
+                        <h5>GCE Advanced Level</h5>
+                        <p class="text-primary mb-0">Mahanama College - Colombo</p>
+                    </div>
+                </div>
+                <div class="timeline-item left" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <span class="badge bg-primary text-black mb-2">2006 - 2018</span>
+                        <h5>GCE Ordinary Level</h5>
+                        <p class="text-primary mb-0">Negombo South International School - Piliyandala</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-5" style="background-color: #050505; scroll-margin-top: 80px;">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Projects</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4" data-aos="zoom-in">
+                    <div class="card h-100 border-0">
+                        <img src="https://github.com/user-attachments/assets/44732a17-6b89-49cc-ad96-936ab065bd84" class="card-img-top" alt="E-Commerce App">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold">Realtime-chat-web-app</h5>
+                            <p class="small">A robust, real-time chat application built with the MERN stack and uses Websocket API and Rest API (MongoDB, Express, React, Node.js) and Dockerized for easy deployment.</p>
+                            <a href="https://github.com/Rash200217/Realtime-chat-web-app" target="_blank" class="btn btn-sm btn-outline-light text-primary border-primary">GitHub Repo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="card h-100 border-0">
+                        <img src="https://github.com/Rash200217/Trendora-Ecommerce/blob/main/Screenshot%201.png?raw=true" class="card-img-top" alt="Inventory System">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold">Trendora-Ecommerce</h5>
+                            <p class="small">A full-stack e-commerce fashion web application built with React, Spring Boot, and PostgreSQL. Features secure authentication, admin dashboard, chatbot and responsive design.</p>
+                            <a href="https://github.com/Rash200217/Trendora-Ecommerce" target="_blank" class="btn btn-sm btn-outline-light text-primary border-primary">GitHub Repo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="card h-100 border-0">
+                        <img src="https://github.com/user-attachments/assets/14a1a3d8-a449-4764-bf4a-4b80c4ce47b9" class="card-img-top" alt="Data Analysis">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold">Creative Todo Web App</h5>
+                            <p class="small">A modern full-stack Todo App built with Laravel 12 and React + Vite. Features a stunning Glassmorphism UI, role-based access control (Admin/User), task scheduling with notifications, and advanced search/filtering.</p>
+                            <a href="https://github.com/Rash200217/todo-app" target="_blank" class="btn btn-sm btn-outline-light text-primary border-primary">GitHub Repo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="card h-100 border-0">
+                        <img src="https://github.com/Rash200217/thetemplerscafe/blob/main/Screenshot%201.png?raw=true" class="card-img-top" alt="Data Analysis">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold">The Templers Cafe Website</h5>
+                            <p class="small">A responsive full-stack cafe management system featuring online table reservations, a loyalty program, an simple chatbot, and an admin dashboard. Built with PHP, MySQL, and Bootstrap.</p>
+                            <a href="https://github.com/Rash200217/thetemplerscafe" target="_blank" class="btn btn-sm btn-outline-light text-primary border-primary">GitHub Repo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-5" style="scroll-margin-top: 80px;">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card p-5">
+                        <h3 class="fw-bold text-center mb-4">Contact Me</h3>
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <input type="text" class="form-control" placeholder="Your Name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <input type="email" class="form-control" placeholder="Your Email" required>
+                                </div>
+                            </div>
+                            <textarea class="form-control mb-3" rows="5" placeholder="Your Message" required></textarea>
+                            <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                        </form>
+                        
+                        <div class="text-center mt-5">
+                            <p class="mb-3 text-white">Or connect with me on</p>
+                            <div class="d-flex justify-content-center gap-3">
+                                <a href="https://linkedin.com/in/rashmika-dhananjaya" target="_blank" class="btn btn-outline-light rounded-circle" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fab fa-linkedin-in fa-lg"></i>
+                                </a>
+                                <a href="https://github.com/Rash200217" target="_blank" class="btn btn-outline-light rounded-circle" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fab fa-github fa-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-4 text-center border-top border-secondary bg-black">
+        <p class="text-muted small mb-0">&copy; 2026 Rashmika Dhananjaya. Built By RashDesigns</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <script>
+        AOS.init({ once: true, duration: 1000 });
+        if(document.querySelector('.typed-text')) {
+            var typed = new Typed('.typed-text', {
+                strings: ['Software Engineer', 'Full Stack Developer', 'Problem Solver'],
+                typeSpeed: 50,
+                backSpeed: 30,
+                loop: true
+            });
+        }
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Sending...';
+            btn.disabled = true;
+            setTimeout(() => {
+                alert('Message Sent!');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                this.reset();
+            }, 1500);
+        });
+
+        // Add active class to navbar link on click
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Close mobile menu if open
+                const navbarCollapse = document.getElementById('navbarNav');
+                if (navbarCollapse.classList.contains('show')) {
+                    const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+                    bsCollapse.hide();
+                }
+            });
+        });
+    </script>
+    <div id="root"></div>
+</body>
+</html>
